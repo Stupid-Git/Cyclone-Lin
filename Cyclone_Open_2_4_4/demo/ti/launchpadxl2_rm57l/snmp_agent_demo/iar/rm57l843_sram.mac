@@ -1,0 +1,34 @@
+// -----------------------------------------------------------------------
+// This file contains the flash set up configuration for the RM4x.
+//
+//
+// $Revision :$
+//
+//-------------------------------------------------------------------------
+
+PrepareMemory( )
+{
+__var Reg;
+
+  __message "Executing memory setup macro RM57x \n";
+
+  //Enable global memory hardware initialization
+  __writeMemory32(0xA,0xFFFFFF5C, "Memory");
+  //Enable auto hardware initalisation for SRAM
+  __writeMemory32(0x0002007,0xFFFFFF60, "Memory");
+  //Wait untill hardware initialization comletes
+  __delay(10);
+  //Disnable global memory hardware initialization
+  __writeMemory32(0x5,0xFFFFFF5C, "Memory");
+  
+  // Switch to OSC clock (16MHz)
+  // GHVSRC = 0;
+  //__writeMemory32(0,0xFFFFFF48, "Memory");
+}
+
+execUserPreload( )
+{
+  __message "execUserPreload\n" ;
+  __hwReset(0);
+  PrepareMemory( ) ;
+}

@@ -1,0 +1,656 @@
+/**
+ * @file main.c
+ * @brief Main routine
+ *
+ * @section License
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ * Copyright (C) 2010-2024 Oryx Embedded SARL. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * @author Oryx Embedded SARL (www.oryx-embedded.com)
+ * @version 2.4.4
+ **/
+
+//Dependencies
+#include <stdlib.h>
+#include "mpc5748g.h"
+#include "system_mpc5748g.h"
+#include "devkit_mpc5748g.h"
+#include "core/net.h"
+#include "drivers/mac/mpc5748_eth1_driver.h"
+#include "drivers/phy/ksz8081_driver.h"
+#include "dhcp/dhcp_client.h"
+#include "ipv6/slaac.h"
+#include "shell/shell_client.h"
+#include "ssh/ssh_key_verify.h"
+#include "rng/yarrow.h"
+#include "debug.h"
+
+//Ethernet interface configuration
+#define APP_IF_NAME "eth0"
+#define APP_HOST_NAME "ssh-client-demo"
+#define APP_MAC_ADDR "00-AB-CD-EF-57-48"
+
+#define APP_USE_DHCP_CLIENT ENABLED
+#define APP_IPV4_HOST_ADDR "192.168.0.20"
+#define APP_IPV4_SUBNET_MASK "255.255.255.0"
+#define APP_IPV4_DEFAULT_GATEWAY "192.168.0.254"
+#define APP_IPV4_PRIMARY_DNS "8.8.8.8"
+#define APP_IPV4_SECONDARY_DNS "8.8.4.4"
+
+#define APP_USE_SLAAC ENABLED
+#define APP_IPV6_LINK_LOCAL_ADDR "fe80::5748"
+#define APP_IPV6_PREFIX "2001:db8::"
+#define APP_IPV6_PREFIX_LENGTH 64
+#define APP_IPV6_GLOBAL_ADDR "2001:db8::5748"
+#define APP_IPV6_ROUTER "fe80::1"
+#define APP_IPV6_PRIMARY_DNS "2001:4860:4860::8888"
+#define APP_IPV6_SECONDARY_DNS "2001:4860:4860::8844"
+
+//Application configuration
+#define APP_SSH_SERVER_NAME "test.rebex.net"
+#define APP_SSH_SERVER_PORT 22
+#define APP_SSH_USERNAME "demo"
+#define APP_SSH_PASSWORD "password"
+
+//List of trusted host keys
+const char_t *trustedHostKeys[] =
+{
+   //Rebex 1024-bit RSA host key
+   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQC+6dRUWPl1iar2X3BT51cD0/Hr"
+   "lXd3UTuSctj2bvRwJxKRt7iG8H/b5xUjplsbenEzVDHzlz+PliivDMhHd4kv0gFg"
+   "Bj4YrAWyau4MR/2ZIbHzPf+S1ma0u9n6cyv8dsYjvRtHj7iAkHmzhMKJBOgJeMrR"
+   "clbqlKAz/fSYUQH18w==",
+
+   //Rebex 2048-bit RSA host key
+   "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAkRM6RxDdi3uAGogR3nsQMpmt43X4"
+   "WnwgMzs8VkwUCqikewxqk4U7EyUSOUeT3CoUNOtywrkNbH83e6/yQgzc3M8i/eDz"
+   "YtXaNGcKyLfy3Ci6XOwiLLOx1z2AGvvTXln1RXtve+Tn1RTr1BhXVh2cUYbiuVtT"
+   "WqbEgErT20n4GWD4wv7FhkDbLXNi8DX07F9v7+jH67i0kyGm+E3rE+SaCMRo3zXE"
+   "6VO+ijcm9HdVxfltQwOYLfuPXM2t5aUSfa96KJcA0I4RCMzA/8Dl9hXGfbWdbD2h"
+   "K1ZQ1pLvvpNPPyKKjPZcMpOznprbg+jIlsZMWIHt7mq2OJXSdruhRrGzZw==",
+
+   //Rebex NIST P-256 host key
+   "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAy"
+   "NTYAAABBBLZcZopPvkxYERubWeSrWOSHpxJdR14WFVES/Q3hFguTn6L+0EANqYcb"
+   "RXhGBUV6SjR7SaxZACXSxOzgCtG4kwc=",
+
+   //Rebex Ed25519 host key
+   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdXzF+Jx/wvEBun5fxi8FQK30mi"
+   "LZFND0rxkYwNcYlE"
+};
+
+//Global variables
+DhcpClientSettings dhcpClientSettings;
+DhcpClientContext dhcpClientContext;
+SlaacSettings slaacSettings;
+SlaacContext slaacContext;
+ShellClientContext shellClientContext;
+YarrowContext yarrowContext;
+uint8_t seed[32];
+
+
+/**
+ * @brief System initialization
+ **/
+
+void systemInit(void)
+{
+   //Set S160 clock divider
+   MC_CGM->SC_DC0 = MC_CGM_SC_DC0_DE_MASK | MC_CGM_SC_DC0_DIV(0);
+   //Set S80 clock divider
+   MC_CGM->SC_DC1 = MC_CGM_SC_DC1_DE_MASK | MC_CGM_SC_DC1_DIV(1);
+   //Set S40 clock divider
+   MC_CGM->SC_DC2 = MC_CGM_SC_DC2_DE_MASK | MC_CGM_SC_DC2_DIV(3);
+   //Set FS80 clock divider
+   MC_CGM->SC_DC5 = MC_CGM_SC_DC5_DE_MASK | MC_CGM_SC_DC5_DIV(1);
+
+   //Enable all modes
+   MC_ME->ME |= MC_ME_ME_STANDBY0_MASK | MC_ME_ME_STOP0_MASK |
+      MC_ME_ME_RUN3_MASK | MC_ME_ME_RUN2_MASK | MC_ME_ME_RUN1_MASK;
+
+   //Set run modes
+   MC_ME->RUN_PC[0] = MC_ME_RUN_PC_RUN3_MASK | MC_ME_RUN_PC_RUN2_MASK |
+      MC_ME_RUN_PC_RUN1_MASK | MC_ME_RUN_PC_RUN0_MASK |
+      MC_ME_RUN_PC_DRUN_MASK | MC_ME_RUN_PC_SAFE_MASK;
+
+   //Connect FXOSC as source clock
+   MC_CGM->AC5_SC = MC_CGM_AC5_SC_SELCTL_MASK;
+
+   //Configure PLL divide register
+   PLLDIG->PLLDV = PLLDIG_PLLDV_RFDPHI1(6) | PLLDIG_PLLDV_RFDPHI(1) |
+      PLLDIG_PLLDV_PREDIV(2) | PLLDIG_PLLDV_MFD(32);
+
+   //Set PLL calibration register
+   PLLDIG->PLLCAL3 = PLLDIG_PLLCAL3_MFDEN(9999);
+
+   //Enable sigma delta modulation
+   PLLDIG->PLLFD |= PLLDIG_PLLFD_SMDEN_MASK;
+
+   //Configures system behavior during DRUN mode
+   MC_ME->DRUN_MC = MC_ME_DRUN_MC_MVRON_MASK | MC_ME_DRUN_MC_FLAON(3) |
+      MC_ME_DRUN_MC_SXOSCON_MASK | MC_ME_DRUN_MC_PLLON_MASK |
+      MC_ME_DRUN_MC_FXOSCON_MASK | MC_ME_DRUN_MC_SYSCLK(2);
+
+   //Switch to DRUN mode
+   MC_ME->MCTL = MC_ME_MCTL_TARGET_MODE(3) | MC_ME_MCTL_KEY(0x5AF0);
+   MC_ME->MCTL = MC_ME_MCTL_TARGET_MODE(3) | MC_ME_MCTL_KEY(0xA50F);
+
+   //Wait for the mode transition to complete
+   while((MC_ME->GS & MC_ME_GS_S_MTRANS_MASK) != 0)
+   {
+   }
+}
+
+
+/**
+ * @brief I/O initialization
+ **/
+
+void ioInit(void)
+{
+   //Configure LEDs
+   SIUL2->MSCR[USR_LED1] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED2] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED3] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED4] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED5] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED6] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED7] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+   SIUL2->MSCR[USR_LED8] = SIUL2_MSCR_OBE_MASK | SIUL2_MSCR_SMC_MASK;
+
+   //Clear LEDs
+   SIUL2->GPDO[USR_LED1] = 1;
+   SIUL2->GPDO[USR_LED2] = 1;
+   SIUL2->GPDO[USR_LED3] = 1;
+   SIUL2->GPDO[USR_LED4] = 1;
+   SIUL2->GPDO[USR_LED5] = 1;
+   SIUL2->GPDO[USR_LED6] = 1;
+   SIUL2->GPDO[USR_LED7] = 1;
+   SIUL2->GPDO[USR_LED8] = 1;
+
+   //Configure push buttons
+   SIUL2->MSCR[PB_SW1] = SIUL2_MSCR_SMC_MASK | SIUL2_MSCR_IBE_MASK;
+   SIUL2->MSCR[PB_SW2] = SIUL2_MSCR_SMC_MASK | SIUL2_MSCR_IBE_MASK;
+}
+
+
+/**
+ * @brief Server's host key verification callback
+ * @param[in] connection Pointer to the SSH connection
+ * @param[in] hostKey Pointer to the server's host key
+ * @param[in] hostKeyLen Length of the host key, in bytes
+ * @return Error code
+ **/
+
+error_t shellClientHostKeyVerifyCallback(SshConnection *connection,
+   const uint8_t *hostKey, size_t hostKeyLen)
+{
+   error_t error;
+   uint_t i;
+
+   //Debug message
+   TRACE_INFO("Shell Client: Public key verification callback\r\n");
+
+   //Initialize status code
+   error = ERROR_INVALID_KEY;
+
+   //Loop through the list of known host keys
+   for(i = 0; i < arraysize(trustedHostKeys) && error; i++)
+   {
+      //Check whether the host key is trusted
+      error = sshVerifyHostKey(hostKey, hostKeyLen, trustedHostKeys[i],
+         strlen(trustedHostKeys[i]));
+   }
+
+   //Return status code
+   return error;
+}
+
+
+/**
+ * @brief SSH initialization callback
+ * @param[in] context Pointer to the shell client context
+ * @param[in] sshContext Pointer to the SSH context
+ * @return Error code
+ **/
+
+error_t shellClientSshInitCallback(ShellClientContext *context,
+   SshContext *sshContext)
+{
+   error_t error;
+
+   //Debug message
+   TRACE_INFO("Shell Client: SSH initialization callback\r\n");
+
+   //Set the PRNG algorithm to be used
+   error = sshSetPrng(sshContext, YARROW_PRNG_ALGO, &yarrowContext);
+   //Any error to report?
+   if(error)
+      return error;
+
+   //Set the user name to be used for authentication
+   error = sshSetUsername(sshContext, APP_SSH_USERNAME);
+   //Any error to report?
+   if(error)
+      return error;
+
+   //Set the password to be used for authentication
+   error = sshSetPassword(sshContext, APP_SSH_PASSWORD);
+   //Any error to report?
+   if(error)
+      return error;
+
+   //Register host key verification callback function
+   error = sshRegisterHostKeyVerifyCallback(sshContext,
+      shellClientHostKeyVerifyCallback);
+   //Any error to report?
+   if(error)
+      return error;
+
+   //Successful processing
+   return NO_ERROR;
+}
+
+
+/**
+ * @brief Shell client test routine
+ * @return Error code
+ **/
+
+error_t shellClientTest(void)
+{
+   error_t error;
+   size_t n;
+   uint32_t exitStatus;
+   IpAddr ipAddr;
+   char_t buffer[128];
+
+   //Initialize shell client context
+   shellClientInit(&shellClientContext);
+
+   //Start of exception handling block
+   do
+   {
+      //Debug message
+      TRACE_INFO("\r\n\r\nResolving server name...\r\n");
+
+      //Resolve SSH server name
+      error = getHostByName(NULL, APP_SSH_SERVER_NAME, &ipAddr, 0);
+      //Any error to report?
+      if(error)
+      {
+         //Debug message
+         TRACE_INFO("Failed to resolve server name!\r\n");
+         break;
+      }
+
+      //Register SSH initialization callback
+      error = shellClientRegisterSshInitCallback(&shellClientContext,
+         shellClientSshInitCallback);
+      //Any error to report?
+      if(error)
+         break;
+
+      //Set timeout value for blocking operations
+      error = shellClientSetTimeout(&shellClientContext, 20000);
+      //Any error to report?
+      if(error)
+         break;
+
+      //Debug message
+      TRACE_INFO("Connecting to SSH server %s...\r\n",
+         ipAddrToString(&ipAddr, NULL));
+
+      //Connect to the SSH server
+      error = shellClientConnect(&shellClientContext, &ipAddr,
+         APP_SSH_SERVER_PORT);
+      //Any error to report?
+      if(error)
+      {
+         //Debug message
+         TRACE_INFO("Failed to connect to SSH server!\r\n");
+         break;
+      }
+
+      //Execute command line
+      error = shellClientExecuteCommand(&shellClientContext, "ls -a");
+      //Any error to report?
+      if(error)
+         break;
+
+      //Read command output stream
+      while(!error)
+      {
+         //Read data from output stream
+         error = shellClientReadStream(&shellClientContext, buffer,
+            sizeof(buffer) - 1, &n, 0);
+
+         //Check status code
+         if(!error)
+         {
+            //Properly terminate the string with a NULL character
+            buffer[n] = '\0';
+            //Dump output stream
+            TRACE_INFO("%s", buffer);
+         }
+      }
+
+      //Terminate the string with a line feed
+      TRACE_INFO("\r\n");
+
+      //Any error to report?
+      if(error != ERROR_END_OF_STREAM)
+         break;
+
+      //Close stream
+      error = shellClientCloseStream(&shellClientContext);
+      //Any error to report?
+      if(error)
+         break;
+
+      //Retrieve the exit status of the command
+      exitStatus = shellClientGetExitStatus(&shellClientContext);
+      //Debug message
+      TRACE_INFO("Command exit status: %" PRIu32 "\r\n", exitStatus);
+
+      //Gracefully disconnect from the SSH server
+      shellClientDisconnect(&shellClientContext);
+
+      //Debug message
+      TRACE_INFO("Connection closed\r\n");
+
+      //End of exception handling block
+   } while(0);
+
+   //Release shell client context
+   shellClientDeinit(&shellClientContext);
+
+   //Return status code
+   return error;
+}
+
+
+/**
+ * @brief User task
+ * @param[in] param Unused parameter
+ **/
+
+void userTask(void *param)
+{
+   //Endless loop
+   while(1)
+   {
+      //SW1 button pressed?
+      if(SIUL2->GPDI[PB_SW1] != 0)
+      {
+         //Shell client test routine
+         shellClientTest();
+
+         //Wait for the SW1 button to be released
+         while(SIUL2->GPDI[PB_SW1] != 0);
+      }
+
+      //Loop delay
+      osDelayTask(100);
+   }
+}
+
+
+/**
+ * @brief LED task
+ * @param[in] param Unused parameter
+ **/
+
+void ledTask(void *param)
+{
+   //Endless loop
+   while(1)
+   {
+      SIUL2->GPDO[USR_LED1] = 0;
+      osDelayTask(100);
+      SIUL2->GPDO[USR_LED1] = 1;
+      osDelayTask(900);
+   }
+}
+
+
+/**
+ * @brief Main entry point
+ * @return Unused value
+ **/
+
+int_t main(void)
+{
+   error_t error;
+   OsTaskId taskId;
+   OsTaskParameters taskParams;
+   NetInterface *interface;
+   MacAddr macAddr;
+#if (APP_USE_DHCP_CLIENT == DISABLED)
+   Ipv4Addr ipv4Addr;
+#endif
+#if (APP_USE_SLAAC == DISABLED)
+   Ipv6Addr ipv6Addr;
+#endif
+
+   //System initialization
+   systemInit();
+   //Update system core clock
+   SystemCoreClockUpdate();
+
+   //Initialize kernel
+   osInitKernel();
+   //Configure debug UART
+   debugInit(19200);
+
+   //Start-up message
+   TRACE_INFO("\r\n");
+   TRACE_INFO("**********************************\r\n");
+   TRACE_INFO("*** CycloneSSH SSH Client Demo ***\r\n");
+   TRACE_INFO("**********************************\r\n");
+   TRACE_INFO("Copyright: 2010-2024 Oryx Embedded SARL\r\n");
+   TRACE_INFO("Compiled: %s %s\r\n", __DATE__, __TIME__);
+   TRACE_INFO("Target: MPC5748G\r\n");
+   TRACE_INFO("\r\n");
+
+   //Configure I/Os
+   ioInit();
+
+   //Generate a random seed
+
+   //PRNG initialization
+   error = yarrowInit(&yarrowContext);
+   //Any error to report?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to initialize PRNG!\r\n");
+   }
+
+   //Properly seed the PRNG
+   error = yarrowSeed(&yarrowContext, seed, sizeof(seed));
+   //Any error to report?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to seed PRNG!\r\n");
+   }
+
+   //TCP/IP stack initialization
+   error = netInit();
+   //Any error to report?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to initialize TCP/IP stack!\r\n");
+   }
+
+   //Configure the first Ethernet interface
+   interface = &netInterface[0];
+
+   //Set interface name
+   netSetInterfaceName(interface, APP_IF_NAME);
+   //Set host name
+   netSetHostname(interface, APP_HOST_NAME);
+   //Set host MAC address
+   macStringToAddr(APP_MAC_ADDR, &macAddr);
+   netSetMacAddr(interface, &macAddr);
+   //Select the relevant network adapter
+   netSetDriver(interface, &mpc5748Eth1Driver);
+   netSetPhyDriver(interface, &ksz8081PhyDriver);
+
+   //Initialize network interface
+   error = netConfigInterface(interface);
+   //Any error to report?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to configure interface %s!\r\n", interface->name);
+   }
+
+#if (IPV4_SUPPORT == ENABLED)
+#if (APP_USE_DHCP_CLIENT == ENABLED)
+   //Get default settings
+   dhcpClientGetDefaultSettings(&dhcpClientSettings);
+   //Set the network interface to be configured by DHCP
+   dhcpClientSettings.interface = interface;
+   //Disable rapid commit option
+   dhcpClientSettings.rapidCommit = FALSE;
+
+   //DHCP client initialization
+   error = dhcpClientInit(&dhcpClientContext, &dhcpClientSettings);
+   //Failed to initialize DHCP client?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to initialize DHCP client!\r\n");
+   }
+
+   //Start DHCP client
+   error = dhcpClientStart(&dhcpClientContext);
+   //Failed to start DHCP client?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to start DHCP client!\r\n");
+   }
+#else
+   //Set IPv4 host address
+   ipv4StringToAddr(APP_IPV4_HOST_ADDR, &ipv4Addr);
+   ipv4SetHostAddr(interface, ipv4Addr);
+
+   //Set subnet mask
+   ipv4StringToAddr(APP_IPV4_SUBNET_MASK, &ipv4Addr);
+   ipv4SetSubnetMask(interface, ipv4Addr);
+
+   //Set default gateway
+   ipv4StringToAddr(APP_IPV4_DEFAULT_GATEWAY, &ipv4Addr);
+   ipv4SetDefaultGateway(interface, ipv4Addr);
+
+   //Set primary and secondary DNS servers
+   ipv4StringToAddr(APP_IPV4_PRIMARY_DNS, &ipv4Addr);
+   ipv4SetDnsServer(interface, 0, ipv4Addr);
+   ipv4StringToAddr(APP_IPV4_SECONDARY_DNS, &ipv4Addr);
+   ipv4SetDnsServer(interface, 1, ipv4Addr);
+#endif
+#endif
+
+#if (IPV6_SUPPORT == ENABLED)
+#if (APP_USE_SLAAC == ENABLED)
+   //Get default settings
+   slaacGetDefaultSettings(&slaacSettings);
+   //Set the network interface to be configured
+   slaacSettings.interface = interface;
+
+   //SLAAC initialization
+   error = slaacInit(&slaacContext, &slaacSettings);
+   //Failed to initialize SLAAC?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to initialize SLAAC!\r\n");
+   }
+
+   //Start IPv6 address autoconfiguration process
+   error = slaacStart(&slaacContext);
+   //Failed to start SLAAC process?
+   if(error)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to start SLAAC!\r\n");
+   }
+#else
+   //Set link-local address
+   ipv6StringToAddr(APP_IPV6_LINK_LOCAL_ADDR, &ipv6Addr);
+   ipv6SetLinkLocalAddr(interface, &ipv6Addr);
+
+   //Set IPv6 prefix
+   ipv6StringToAddr(APP_IPV6_PREFIX, &ipv6Addr);
+   ipv6SetPrefix(interface, 0, &ipv6Addr, APP_IPV6_PREFIX_LENGTH);
+
+   //Set global address
+   ipv6StringToAddr(APP_IPV6_GLOBAL_ADDR, &ipv6Addr);
+   ipv6SetGlobalAddr(interface, 0, &ipv6Addr);
+
+   //Set default router
+   ipv6StringToAddr(APP_IPV6_ROUTER, &ipv6Addr);
+   ipv6SetDefaultRouter(interface, 0, &ipv6Addr);
+
+   //Set primary and secondary DNS servers
+   ipv6StringToAddr(APP_IPV6_PRIMARY_DNS, &ipv6Addr);
+   ipv6SetDnsServer(interface, 0, &ipv6Addr);
+   ipv6StringToAddr(APP_IPV6_SECONDARY_DNS, &ipv6Addr);
+   ipv6SetDnsServer(interface, 1, &ipv6Addr);
+#endif
+#endif
+
+   //Set task parameters
+   taskParams = OS_TASK_DEFAULT_PARAMS;
+   taskParams.stackSize = 750;
+   taskParams.priority = OS_TASK_PRIORITY_NORMAL;
+
+   //Create user task
+   taskId = osCreateTask("User", userTask, NULL, &taskParams);
+   //Failed to create the task?
+   if(taskId == OS_INVALID_TASK_ID)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to create task!\r\n");
+   }
+
+   //Set task parameters
+   taskParams = OS_TASK_DEFAULT_PARAMS;
+   taskParams.stackSize = 200;
+   taskParams.priority = OS_TASK_PRIORITY_NORMAL;
+
+   //Create a task to blink the LED
+   taskId = osCreateTask("LED", ledTask, NULL, &taskParams);
+   //Failed to create the task?
+   if(taskId == OS_INVALID_TASK_ID)
+   {
+      //Debug message
+      TRACE_ERROR("Failed to create task!\r\n");
+   }
+
+   //Start the execution of tasks
+   osStartKernel();
+
+   //This function should never return
+   return 0;
+}

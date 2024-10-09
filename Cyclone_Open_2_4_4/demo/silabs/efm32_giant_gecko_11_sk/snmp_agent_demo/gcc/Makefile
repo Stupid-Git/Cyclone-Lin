@@ -1,0 +1,329 @@
+RESULT ?= snmp_agent_demo
+
+DEFINES = \
+	-DEFM32GG11B820F2048GL192 \
+	-DUSE_EFM32_GIANT_GECKO_11_SK \
+	-D_WINSOCK_H \
+	-D__error_t_defined
+
+INCLUDES = \
+	-I../src \
+	-I../../../../../third_party/cmsis/include \
+	-I../../../../../third_party/silabs/devices/efm32gg11b \
+	-I../../../../../third_party/silabs/boards/efm32_giant_gecko_11_sk \
+	-I../../../../../third_party/silabs/emlib/inc \
+	-I../../../../../common \
+	-I../../../../../cyclone_tcp \
+	-I../../../../../cyclone_crypto
+
+ASM_SOURCES = \
+	./startup_efm32gg11b.S
+
+C_SOURCES = \
+	../src/system_efm32gg11b.c \
+	./syscalls.c \
+	../src/main.c \
+	../src/private_mib_module.c \
+	../src/private_mib_impl.c \
+	../src/debug.c \
+	../../../../../common/cpu_endian.c \
+	../../../../../common/os_port_none.c \
+	../../../../../common/date_time.c \
+	../../../../../common/str.c \
+	../../../../../cyclone_tcp/core/net.c \
+	../../../../../cyclone_tcp/core/net_mem.c \
+	../../../../../cyclone_tcp/core/net_misc.c \
+	../../../../../cyclone_tcp/drivers/mac/efm32gg11_eth_driver.c \
+	../../../../../cyclone_tcp/drivers/phy/ksz8091_driver.c \
+	../../../../../cyclone_tcp/core/nic.c \
+	../../../../../cyclone_tcp/core/ethernet.c \
+	../../../../../cyclone_tcp/core/ethernet_misc.c \
+	../../../../../cyclone_tcp/ipv4/arp.c \
+	../../../../../cyclone_tcp/ipv4/arp_cache.c \
+	../../../../../cyclone_tcp/ipv4/ipv4.c \
+	../../../../../cyclone_tcp/ipv4/ipv4_frag.c \
+	../../../../../cyclone_tcp/ipv4/ipv4_multicast.c \
+	../../../../../cyclone_tcp/ipv4/ipv4_misc.c \
+	../../../../../cyclone_tcp/ipv4/icmp.c \
+	../../../../../cyclone_tcp/igmp/igmp_host.c \
+	../../../../../cyclone_tcp/igmp/igmp_host_misc.c \
+	../../../../../cyclone_tcp/igmp/igmp_common.c \
+	../../../../../cyclone_tcp/igmp/igmp_debug.c \
+	../../../../../cyclone_tcp/ipv6/ipv6.c \
+	../../../../../cyclone_tcp/ipv6/ipv6_frag.c \
+	../../../../../cyclone_tcp/ipv6/ipv6_multicast.c \
+	../../../../../cyclone_tcp/ipv6/ipv6_pmtu.c \
+	../../../../../cyclone_tcp/ipv6/ipv6_misc.c \
+	../../../../../cyclone_tcp/ipv6/icmpv6.c \
+	../../../../../cyclone_tcp/ipv6/ndp.c \
+	../../../../../cyclone_tcp/ipv6/ndp_cache.c \
+	../../../../../cyclone_tcp/ipv6/ndp_misc.c \
+	../../../../../cyclone_tcp/ipv6/slaac.c \
+	../../../../../cyclone_tcp/ipv6/slaac_misc.c \
+	../../../../../cyclone_tcp/mld/mld_node.c \
+	../../../../../cyclone_tcp/mld/mld_node_misc.c \
+	../../../../../cyclone_tcp/mld/mld_common.c \
+	../../../../../cyclone_tcp/mld/mld_debug.c \
+	../../../../../cyclone_tcp/core/ip.c \
+	../../../../../cyclone_tcp/core/tcp.c \
+	../../../../../cyclone_tcp/core/tcp_fsm.c \
+	../../../../../cyclone_tcp/core/tcp_misc.c \
+	../../../../../cyclone_tcp/core/tcp_timer.c \
+	../../../../../cyclone_tcp/core/udp.c \
+	../../../../../cyclone_tcp/core/socket.c \
+	../../../../../cyclone_tcp/core/socket_misc.c \
+	../../../../../cyclone_tcp/core/bsd_socket.c \
+	../../../../../cyclone_tcp/core/bsd_socket_options.c \
+	../../../../../cyclone_tcp/core/bsd_socket_misc.c \
+	../../../../../cyclone_tcp/core/raw_socket.c \
+	../../../../../cyclone_tcp/dns/dns_cache.c \
+	../../../../../cyclone_tcp/dns/dns_client.c \
+	../../../../../cyclone_tcp/dns/dns_common.c \
+	../../../../../cyclone_tcp/dns/dns_debug.c \
+	../../../../../cyclone_tcp/mdns/mdns_client.c \
+	../../../../../cyclone_tcp/mdns/mdns_responder.c \
+	../../../../../cyclone_tcp/mdns/mdns_responder_misc.c \
+	../../../../../cyclone_tcp/mdns/mdns_common.c \
+	../../../../../cyclone_tcp/netbios/nbns_client.c \
+	../../../../../cyclone_tcp/netbios/nbns_responder.c \
+	../../../../../cyclone_tcp/netbios/nbns_common.c \
+	../../../../../cyclone_tcp/llmnr/llmnr_client.c \
+	../../../../../cyclone_tcp/llmnr/llmnr_responder.c \
+	../../../../../cyclone_tcp/llmnr/llmnr_common.c \
+	../../../../../cyclone_tcp/dhcp/dhcp_client.c \
+	../../../../../cyclone_tcp/dhcp/dhcp_client_fsm.c \
+	../../../../../cyclone_tcp/dhcp/dhcp_client_misc.c \
+	../../../../../cyclone_tcp/dhcp/dhcp_common.c \
+	../../../../../cyclone_tcp/dhcp/dhcp_debug.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_dispatch.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_message.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_pdu.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_object.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_trap.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_inform.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_usm.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_vacm.c \
+	../../../../../cyclone_tcp/snmp/snmp_agent_misc.c \
+	../../../../../cyclone_tcp/mibs/mib_common.c \
+	../../../../../cyclone_tcp/mibs/mib2_module.c \
+	../../../../../cyclone_tcp/mibs/mib2_impl.c \
+	../../../../../cyclone_tcp/mibs/mib2_impl_sys.c \
+	../../../../../cyclone_tcp/mibs/mib2_impl_if.c \
+	../../../../../cyclone_tcp/mibs/mib2_impl_ip.c \
+	../../../../../cyclone_tcp/mibs/mib2_impl_tcp.c \
+	../../../../../cyclone_tcp/mibs/mib2_impl_udp.c \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto.c \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_trng.c \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_hash.c \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_cipher.c \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_pkc.c \
+	../../../../../cyclone_crypto/hash/md5.c \
+	../../../../../cyclone_crypto/hash/sha1.c \
+	../../../../../cyclone_crypto/mac/hmac.c \
+	../../../../../cyclone_crypto/cipher/des.c \
+	../../../../../cyclone_crypto/cipher/aes.c \
+	../../../../../cyclone_crypto/cipher_modes/cbc.c \
+	../../../../../cyclone_crypto/cipher_modes/cfb.c \
+	../../../../../cyclone_crypto/encoding/asn1.c \
+	../../../../../cyclone_crypto/encoding/oid.c \
+	../../../../../third_party/silabs/emlib/src/em_assert.c \
+	../../../../../third_party/silabs/emlib/src/em_cmu.c \
+	../../../../../third_party/silabs/emlib/src/em_core.c \
+	../../../../../third_party/silabs/emlib/src/em_crypto.c \
+	../../../../../third_party/silabs/emlib/src/em_ebi.c \
+	../../../../../third_party/silabs/emlib/src/em_emu.c \
+	../../../../../third_party/silabs/emlib/src/em_gpio.c \
+	../../../../../third_party/silabs/emlib/src/em_system.c \
+	../../../../../third_party/silabs/emlib/src/em_usart.c
+
+HEADERS = \
+	../src/os_port_config.h \
+	../src/net_config.h \
+	../src/crypto_config.h \
+	../src/private_mib_module.h \
+	../src/private_mib_impl.h \
+	../../../../../common/cpu_endian.h \
+	../../../../../common/os_port.h \
+	../../../../../common/os_port_none.h \
+	../../../../../common/date_time.h \
+	../../../../../common/str.h \
+	../../../../../common/error.h \
+	../../../../../common/debug.h \
+	../../../../../cyclone_tcp/core/net.h \
+	../../../../../cyclone_tcp/core/net_mem.h \
+	../../../../../cyclone_tcp/core/net_misc.h \
+	../../../../../cyclone_tcp/drivers/mac/efm32gg11_eth_driver.h \
+	../../../../../cyclone_tcp/drivers/phy/ksz8091_driver.h \
+	../../../../../cyclone_tcp/core/nic.h \
+	../../../../../cyclone_tcp/core/ethernet.h \
+	../../../../../cyclone_tcp/core/ethernet_misc.h \
+	../../../../../cyclone_tcp/ipv4/arp.h \
+	../../../../../cyclone_tcp/ipv4/arp_cache.h \
+	../../../../../cyclone_tcp/ipv4/ipv4.h \
+	../../../../../cyclone_tcp/ipv4/ipv4_frag.h \
+	../../../../../cyclone_tcp/ipv4/ipv4_multicast.h \
+	../../../../../cyclone_tcp/ipv4/ipv4_misc.h \
+	../../../../../cyclone_tcp/ipv4/icmp.h \
+	../../../../../cyclone_tcp/igmp/igmp_host.h \
+	../../../../../cyclone_tcp/igmp/igmp_host_misc.h \
+	../../../../../cyclone_tcp/igmp/igmp_common.h \
+	../../../../../cyclone_tcp/igmp/igmp_debug.h \
+	../../../../../cyclone_tcp/ipv6/ipv6.h \
+	../../../../../cyclone_tcp/ipv6/ipv6_frag.h \
+	../../../../../cyclone_tcp/ipv6/ipv6_multicast.h \
+	../../../../../cyclone_tcp/ipv6/ipv6_pmtu.h \
+	../../../../../cyclone_tcp/ipv6/ipv6_misc.h \
+	../../../../../cyclone_tcp/ipv6/icmpv6.h \
+	../../../../../cyclone_tcp/ipv6/ndp.h \
+	../../../../../cyclone_tcp/ipv6/ndp_cache.h \
+	../../../../../cyclone_tcp/ipv6/ndp_misc.h \
+	../../../../../cyclone_tcp/ipv6/slaac.h \
+	../../../../../cyclone_tcp/ipv6/slaac_misc.h \
+	../../../../../cyclone_tcp/mld/mld_node.h \
+	../../../../../cyclone_tcp/mld/mld_node_misc.h \
+	../../../../../cyclone_tcp/mld/mld_common.h \
+	../../../../../cyclone_tcp/mld/mld_debug.h \
+	../../../../../cyclone_tcp/core/ip.h \
+	../../../../../cyclone_tcp/core/tcp.h \
+	../../../../../cyclone_tcp/core/tcp_fsm.h \
+	../../../../../cyclone_tcp/core/tcp_misc.h \
+	../../../../../cyclone_tcp/core/tcp_timer.h \
+	../../../../../cyclone_tcp/core/udp.h \
+	../../../../../cyclone_tcp/core/socket.h \
+	../../../../../cyclone_tcp/core/socket_misc.h \
+	../../../../../cyclone_tcp/core/bsd_socket.h \
+	../../../../../cyclone_tcp/core/bsd_socket_options.h \
+	../../../../../cyclone_tcp/core/bsd_socket_misc.h \
+	../../../../../cyclone_tcp/core/raw_socket.h \
+	../../../../../cyclone_tcp/dns/dns_cache.h \
+	../../../../../cyclone_tcp/dns/dns_client.h \
+	../../../../../cyclone_tcp/dns/dns_common.h \
+	../../../../../cyclone_tcp/dns/dns_debug.h \
+	../../../../../cyclone_tcp/mdns/mdns_client.h \
+	../../../../../cyclone_tcp/mdns/mdns_responder.h \
+	../../../../../cyclone_tcp/mdns/mdns_responder_misc.h \
+	../../../../../cyclone_tcp/mdns/mdns_common.h \
+	../../../../../cyclone_tcp/netbios/nbns_client.h \
+	../../../../../cyclone_tcp/netbios/nbns_responder.h \
+	../../../../../cyclone_tcp/netbios/nbns_common.h \
+	../../../../../cyclone_tcp/llmnr/llmnr_client.h \
+	../../../../../cyclone_tcp/llmnr/llmnr_responder.h \
+	../../../../../cyclone_tcp/llmnr/llmnr_common.h \
+	../../../../../cyclone_tcp/dhcp/dhcp_client.h \
+	../../../../../cyclone_tcp/dhcp/dhcp_client_fsm.h \
+	../../../../../cyclone_tcp/dhcp/dhcp_client_misc.h \
+	../../../../../cyclone_tcp/dhcp/dhcp_common.h \
+	../../../../../cyclone_tcp/dhcp/dhcp_debug.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_dispatch.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_message.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_pdu.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_object.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_trap.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_inform.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_usm.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_vacm.h \
+	../../../../../cyclone_tcp/snmp/snmp_agent_misc.h \
+	../../../../../cyclone_tcp/snmp/snmp_common.h \
+	../../../../../cyclone_tcp/mibs/mib_common.h \
+	../../../../../cyclone_tcp/mibs/mib2_module.h \
+	../../../../../cyclone_tcp/mibs/mib2_impl.h \
+	../../../../../cyclone_tcp/mibs/mib2_impl_sys.h \
+	../../../../../cyclone_tcp/mibs/mib2_impl_if.h \
+	../../../../../cyclone_tcp/mibs/mib2_impl_ip.h \
+	../../../../../cyclone_tcp/mibs/mib2_impl_tcp.h \
+	../../../../../cyclone_tcp/mibs/mib2_impl_udp.h \
+	../../../../../cyclone_crypto/core/crypto.h \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto.h \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_trng.h \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_hash.h \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_cipher.h \
+	../../../../../cyclone_crypto/hardware/efm32gg11/efm32gg11_crypto_pkc.h \
+	../../../../../cyclone_crypto/hash/md5.h \
+	../../../../../cyclone_crypto/hash/sha1.h \
+	../../../../../cyclone_crypto/mac/hmac.h \
+	../../../../../cyclone_crypto/cipher/des.h \
+	../../../../../cyclone_crypto/cipher/aes.h \
+	../../../../../cyclone_crypto/cipher_modes/cbc.h \
+	../../../../../cyclone_crypto/cipher_modes/cfb.h \
+	../../../../../cyclone_crypto/encoding/asn1.h \
+	../../../../../cyclone_crypto/encoding/oid.h \
+	../../../../../third_party/silabs/boards/efm32_giant_gecko_11_sk/efm32_giant_gecko_11_sk.h \
+	../../../../../third_party/silabs/emlib/inc/em_assert.h \
+	../../../../../third_party/silabs/emlib/inc/em_cmu.h \
+	../../../../../third_party/silabs/emlib/inc/em_core.h \
+	../../../../../third_party/silabs/emlib/inc/em_crypto.h \
+	../../../../../third_party/silabs/emlib/inc/em_ebi.h \
+	../../../../../third_party/silabs/emlib/inc/em_emu.h \
+	../../../../../third_party/silabs/emlib/inc/em_gpio.h \
+	../../../../../third_party/silabs/emlib/inc/em_system.h \
+	../../../../../third_party/silabs/emlib/inc/em_usart.h
+
+ASM_OBJECTS = $(patsubst %.S, %.o, $(ASM_SOURCES))
+
+C_OBJECTS = $(patsubst %.c, %.o, $(C_SOURCES))
+
+OBJ_DIR = obj
+
+LINKER_SCRIPT = efm32gg11b_flash.ld
+
+CFLAGS += -fno-common -Wall -Os -g3
+CFLAGS += -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+CFLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
+CFLAGS += $(DEFINES)
+CFLAGS += $(INCLUDES)
+
+CROSS_COMPILE ?= arm-none-eabi-
+CC = $(CROSS_COMPILE)gcc
+LD = $(CROSS_COMPILE)ld
+OBJDUMP = $(CROSS_COMPILE)objdump
+OBJCOPY = $(CROSS_COMPILE)objcopy
+SIZE = $(CROSS_COMPILE)size
+
+THIS_MAKEFILE := $(lastword $(MAKEFILE_LIST))
+
+all: build size
+
+install: build size program
+
+build: $(RESULT).elf $(RESULT).lst $(RESULT).bin $(RESULT).hex
+	
+$(RESULT).elf: $(ASM_OBJECTS) $(C_OBJECTS) $(HEADERS) $(LINKER_SCRIPT) $(THIS_MAKEFILE)
+	$(CC) -Wl,-M=$(RESULT).map -Wl,-T$(LINKER_SCRIPT) $(CFLAGS) $(addprefix $(OBJ_DIR)/, $(notdir $(ASM_OBJECTS))) $(addprefix $(OBJ_DIR)/, $(notdir $(C_OBJECTS))) -o $@
+
+$(ASM_OBJECTS): | $(OBJ_DIR)
+
+$(C_OBJECTS): | $(OBJ_DIR)
+
+$(OBJ_DIR):
+	mkdir -p $@
+
+%.o: %.c $(HEADERS) $(THIS_MAKEFILE)
+	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJ_DIR)/, $(notdir $@))
+
+%.o: %.S $(HEADERS) $(THIS_MAKEFILE)
+	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJ_DIR)/, $(notdir $@))
+
+%.lst: %.elf
+	$(OBJDUMP) -x -S $(RESULT).elf > $@
+
+%.bin: %.elf
+	$(OBJCOPY) -O binary $< $@
+
+%.hex: %.elf
+	$(OBJCOPY) -O ihex $< $@
+
+size: $(RESULT).elf
+	$(SIZE) $(RESULT).elf
+
+flash:
+	openocd -f board/efm32.cfg -c "init; reset halt; flash write_image erase $(RESULT).bin 0x00000000; reset run; shutdown"
+
+clean:
+	rm -f $(RESULT).elf
+	rm -f $(RESULT).bin
+	rm -f $(RESULT).map
+	rm -f $(RESULT).hex
+	rm -f $(RESULT).lst
+	rm -f $(OBJ_DIR)/*.o

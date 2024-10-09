@@ -1,0 +1,30 @@
+//**********************************************************
+//* i.MX RT1052 macro file (running code from Hyper Flash) *
+//**********************************************************
+
+clockInit()
+{
+   __writeMemory32(0xFFFFFFFF, 0x400FC068, "Memory");
+   __writeMemory32(0xFFFFFFFF, 0x400FC06C, "Memory");
+   __writeMemory32(0xFFFFFFFF, 0x400FC070, "Memory");
+   __writeMemory32(0xFFFFFFFF, 0x400FC074, "Memory");
+   __writeMemory32(0xFFFFFFFF, 0x400FC078, "Memory");
+   __writeMemory32(0xFFFFFFFF, 0x400FC07C, "Memory");
+   __writeMemory32(0xFFFFFFFF, 0x400FC080, "Memory");
+   
+   __writeMemory32(0x00002001, 0x400D8030, "Memory");
+   __writeMemory32(0x001D0000, 0x400D8100, "Memory");
+   __writeMemory32(0x00010D40, 0x400FC014, "Memory");
+}
+
+execUserPreload()
+{
+   //Initialize clocks
+   clockInit();
+}
+
+execUserReset()
+{
+   //Initialize clocks
+   clockInit();
+}

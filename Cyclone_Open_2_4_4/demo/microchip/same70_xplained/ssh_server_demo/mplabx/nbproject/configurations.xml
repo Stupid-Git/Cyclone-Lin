@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="65">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="Demo Headers" projectFiles="true">
+        <itemPath>../src/os_port_config.h</itemPath>
+        <itemPath>../src/net_config.h</itemPath>
+        <itemPath>../src/ssh_config.h</itemPath>
+        <itemPath>../src/crypto_config.h</itemPath>
+        <itemPath>../src/FreeRTOSConfig.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="Common Headers" projectFiles="true">
+        <itemPath>../../../../../common/cpu_endian.h</itemPath>
+        <itemPath>../../../../../common/os_port.h</itemPath>
+        <itemPath>../../../../../common/os_port_freertos.h</itemPath>
+        <itemPath>../../../../../common/date_time.h</itemPath>
+        <itemPath>../../../../../common/str.h</itemPath>
+        <itemPath>../../../../../common/resource_manager.h</itemPath>
+        <itemPath>../../../../../common/error.h</itemPath>
+        <itemPath>../../../../../common/debug.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="CycloneTCP Headers" projectFiles="true">
+        <itemPath>../../../../../cyclone_tcp/core/net.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/net_mem.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/net_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/drivers/mac/same70_eth_driver.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/drivers/phy/ksz8081_driver.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/nic.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/ethernet.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/ethernet_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/arp.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/arp_cache.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4_frag.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4_multicast.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/icmp.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_host.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_host_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_debug.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_frag.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_multicast.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_pmtu.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/icmpv6.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ndp.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ndp_cache.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ndp_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/slaac.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/slaac_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_node.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_node_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_debug.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/ip.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp_fsm.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp_timer.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/udp.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/socket.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/socket_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/bsd_socket.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/bsd_socket_options.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/bsd_socket_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/raw_socket.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_cache.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_client.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_debug.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_client.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_responder.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_responder_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/netbios/nbns_client.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/netbios/nbns_responder.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/netbios/nbns_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/llmnr/llmnr_client.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/llmnr/llmnr_responder.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/llmnr/llmnr_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_client.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_client_fsm.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_client_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_common.h</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_debug.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="CycloneSSH Headers" projectFiles="true">
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_server.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_server_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_algorithms.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_extensions.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_transport.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_rsa.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_dh.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_dh_gex.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_ecdh.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_hybrid.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_auth.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_auth_password.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_auth_public_key.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_connection.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_request.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_channel.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_packet.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_material.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_exchange_hash.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_modp_groups.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_import.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_export.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_parse.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_format.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_decrypt.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_verify.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_import.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_export.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_parse.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_verify.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_sign_generate.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_sign_verify.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_sign_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_misc.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/shell/shell_server.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/shell/shell_server_pty.h</itemPath>
+        <itemPath>../../../../../cyclone_ssh/shell/shell_server_misc.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="CycloneCRYPTO Headers" projectFiles="true">
+        <itemPath>../../../../../cyclone_crypto/core/crypto.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto_trng.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto_hash.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto_cipher.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/md5.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/ripemd160.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha1.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha256.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha384.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha512.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha3_256.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha3_512.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/mac/hmac.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/rc4.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/cast128.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/idea.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/des.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/des3.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/aes.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/blowfish.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/twofish.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/serpent.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/camellia.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/seed.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher_modes/cbc.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher_modes/ctr.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/aead/gcm.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/chacha.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/mac/poly1305.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkc/dh.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkc/rsa.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkc/dsa.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ec.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ec_curves.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ecdh.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ecdsa.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/eddsa.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/curve25519.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/curve448.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/x25519.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/x448.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ed25519.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ed448.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/kem.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/mlkem768.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/mlkem1024.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/sntrup761.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/mpi/mpi.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/encoding/base64.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/encoding/asn1.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/encoding/oid.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pem_import.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pem_decrypt.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pem_common.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pkcs5_decrypt.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pkcs5_common.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pkcs8_key_parse.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/x509_key_parse.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/x509_common.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/kdf/pbkdf.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/xof/keccak.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/xof/shake.h</itemPath>
+        <itemPath>../../../../../cyclone_crypto/rng/yarrow.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="FreeRTOS Headers" projectFiles="true">
+        <itemPath>../../../../../third_party/freertos/portable/gcc/arm_cm7/r0p1/portmacro.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/croutine.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/FreeRTOS.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/list.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/mpu_wrappers.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/portable.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/projdefs.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/queue.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/semphr.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/stack_macros.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/task.h</itemPath>
+        <itemPath>../../../../../third_party/freertos/include/timers.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="SAME70-Xplained Headers" projectFiles="true">
+        <itemPath>../../../../../third_party/microchip/boards/same70_xplained/same70_xplained.h</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+      <itemPath>same70_flash.ld</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="Demo Sources" projectFiles="true">
+        <itemPath>./startup_same70.c</itemPath>
+        <itemPath>../src/system_same70.c</itemPath>
+        <itemPath>./syscalls.c</itemPath>
+        <itemPath>../src/main.c</itemPath>
+        <itemPath>../src/debug.c</itemPath>
+        <itemPath>../src/res.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="Common Sources" projectFiles="true">
+        <itemPath>../../../../../common/cpu_endian.c</itemPath>
+        <itemPath>../../../../../common/os_port_freertos.c</itemPath>
+        <itemPath>../../../../../common/date_time.c</itemPath>
+        <itemPath>../../../../../common/str.c</itemPath>
+        <itemPath>../../../../../common/resource_manager.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="CycloneTCP Sources" projectFiles="true">
+        <itemPath>../../../../../cyclone_tcp/core/net.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/net_mem.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/net_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/drivers/mac/same70_eth_driver.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/drivers/phy/ksz8081_driver.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/nic.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/ethernet.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/ethernet_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/arp.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/arp_cache.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4_frag.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4_multicast.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/ipv4_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv4/icmp.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_host.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_host_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/igmp/igmp_debug.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_frag.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_multicast.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_pmtu.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ipv6_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/icmpv6.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ndp.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ndp_cache.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/ndp_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/slaac.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/ipv6/slaac_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_node.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_node_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mld/mld_debug.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/ip.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp_fsm.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/tcp_timer.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/udp.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/socket.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/socket_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/bsd_socket.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/bsd_socket_options.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/bsd_socket_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/core/raw_socket.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_cache.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_client.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dns/dns_debug.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_client.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_responder.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_responder_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/mdns/mdns_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/netbios/nbns_client.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/netbios/nbns_responder.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/netbios/nbns_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/llmnr/llmnr_client.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/llmnr/llmnr_responder.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/llmnr/llmnr_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_client.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_client_fsm.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_client_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_common.c</itemPath>
+        <itemPath>../../../../../cyclone_tcp/dhcp/dhcp_debug.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="CycloneSSH Sources" projectFiles="true">
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_server.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_server_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_algorithms.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_extensions.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_transport.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_rsa.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_dh.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_dh_gex.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_ecdh.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_kex_hybrid.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_auth.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_auth_password.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_auth_public_key.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_connection.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_request.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_channel.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_packet.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_material.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_exchange_hash.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_modp_groups.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_import.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_export.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_parse.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_format.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_decrypt.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_key_verify.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_import.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_export.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_parse.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_cert_verify.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_sign_generate.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_sign_verify.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_sign_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/ssh/ssh_misc.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/shell/shell_server.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/shell/shell_server_pty.c</itemPath>
+        <itemPath>../../../../../cyclone_ssh/shell/shell_server_misc.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="CycloneCRYPTO Sources" projectFiles="true">
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto_trng.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto_hash.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hardware/same70/same70_crypto_cipher.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/md5.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/ripemd160.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha1.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha256.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha384.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha512.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha3_256.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/hash/sha3_512.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/mac/hmac.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/rc4.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/cast128.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/idea.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/des.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/des3.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/aes.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/blowfish.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/twofish.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/serpent.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/camellia.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/seed.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher_modes/cbc.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher_modes/ctr.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/aead/gcm.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/cipher/chacha.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/mac/poly1305.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkc/dh.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkc/rsa.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkc/dsa.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ec.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ec_curves.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ecdh.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ecdsa.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/eddsa.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/curve25519.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/curve448.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/x25519.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/x448.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ed25519.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/ecc/ed448.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/kem.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/mlkem768.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/mlkem1024.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pqc/sntrup761.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/mpi/mpi.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/encoding/base64.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/encoding/asn1.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/encoding/oid.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pem_import.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pem_decrypt.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pem_common.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pkcs5_decrypt.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pkcs5_common.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/pkcs8_key_parse.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/x509_key_parse.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/pkix/x509_common.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/kdf/pbkdf.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/xof/keccak.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/xof/shake.c</itemPath>
+        <itemPath>../../../../../cyclone_crypto/rng/yarrow.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="FreeRTOS Sources" projectFiles="true">
+        <itemPath>../../../../../third_party/freertos/portable/gcc/arm_cm7/r0p1/port.c</itemPath>
+        <itemPath>../../../../../third_party/freertos/croutine.c</itemPath>
+        <itemPath>../../../../../third_party/freertos/list.c</itemPath>
+        <itemPath>../../../../../third_party/freertos/queue.c</itemPath>
+        <itemPath>../../../../../third_party/freertos/tasks.c</itemPath>
+        <itemPath>../../../../../third_party/freertos/timers.c</itemPath>
+        <itemPath>../../../../../third_party/freertos/portable/memmang/heap_3.c</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="default" type="2">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <targetDevice>ATSAME70Q21B</targetDevice>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool>noID</platformTool>
+        <languageToolchain>ARM</languageToolchain>
+        <languageToolchainVersion>10.2.1</languageToolchainVersion>
+        <platform>3</platform>
+      </toolsSet>
+      <packs>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.8.125"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+      </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+        <archiverTool>
+        </archiverTool>
+        <loading>
+          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <parseOnProdLoad>false</parseOnProdLoad>
+          <alternateLoadableFile></alternateLoadableFile>
+        </loading>
+        <subordinates>
+        </subordinates>
+      </compileType>
+      <makeCustomizationType>
+        <makeCustomizationPreStepEnabled>true</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
+        <makeCustomizationPreStep>..\..\..\..\..\utils\ResourceCompiler\bin\rc.exe ${ProjectDir}\..\resources\ ${ProjectDir}\..\src\res.c</makeCustomizationPreStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
+        <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
+        <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
+      </makeCustomizationType>
+      <ARM-AR>
+        <property key="archiver-flags" value="-r"/>
+      </ARM-AR>
+      <ARM-AS>
+        <property key="announce-version" value="false"/>
+        <property key="include-paths" value=""/>
+        <property key="suppress-warnings" value="false"/>
+      </ARM-AS>
+      <ARM-AS-PRE>
+        <property key="announce-version" value="false"/>
+        <property key="include-paths" value=""/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros-undefined" value=""/>
+        <property key="suppress-warnings" value="false"/>
+      </ARM-AS-PRE>
+      <ARM-CPP>
+        <property key="additional-warnings" value="true"/>
+        <property key="called-functions-located" value="true"/>
+        <property key="default-bitfield-type" value="false"/>
+        <property key="default-char-type" value="false"/>
+        <property key="disable-extra-code-exception" value="true"/>
+        <property key="disable-extra-code-generation" value="true"/>
+        <property key="extra-include-directories" value=""/>
+        <property key="extra-warnings" value="false"/>
+        <property key="fast-math" value="false"/>
+        <property key="garbage-collect-data" value="false"/>
+        <property key="garbage-collect-functions" value="true"/>
+        <property key="inhibit-all" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="no-system-directories" value="false"/>
+        <property key="optimization-level" value="-Os"/>
+        <property key="position-independent" value="false"/>
+        <property key="preprocess-only" value="false"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros-undefined" value=""/>
+        <property key="strict-ansi" value="false"/>
+        <property key="strict-ansi-errors" value="false"/>
+        <property key="syntax-only" value="false"/>
+        <property key="undefined-identifier" value="false"/>
+        <property key="unsafe-math" value="false"/>
+        <property key="use-rodata" value="false"/>
+        <property key="verbose" value="false"/>
+      </ARM-CPP>
+      <ARM-GCC>
+        <property key="additional-warnings" value="true"/>
+        <property key="called-functions-located" value="true"/>
+        <property key="default-bitfield-type" value="false"/>
+        <property key="default-char-type" value="false"/>
+        <property key="extra-include-directories"
+                  value="../src;../../../../../third_party/cmsis/include;../../../../../third_party/microchip/devices/same70;../../../../../third_party/microchip/boards/same70_xplained;../../../../../third_party/freertos/include;../../../../../third_party/freertos/portable/gcc/arm_cm7/r0p1;../../../../../common;../../../../../cyclone_tcp;../../../../../cyclone_ssh;../../../../../cyclone_crypto"/>
+        <property key="extra-warnings" value="false"/>
+        <property key="fast-math" value="false"/>
+        <property key="garbage-collect-data" value="false"/>
+        <property key="garbage-collect-functions" value="true"/>
+        <property key="inhibit-all" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="no-system-directories" value="false"/>
+        <property key="optimization-level" value="-Os"/>
+        <property key="position-independent" value="false"/>
+        <property key="preprocessor-macros"
+                  value="__SAME70Q21B__;USE_CMSIS_INIT;USE_SAME70_XPLAINED;_WINSOCK_H"/>
+        <property key="preprocessor-macros-undefined" value=""/>
+        <property key="strict-ansi" value="false"/>
+        <property key="strict-ansi-errors" value="false"/>
+        <property key="support-ansi" value="false"/>
+        <property key="syntax-only" value="false"/>
+        <property key="undefined-identifier" value="false"/>
+        <property key="unsafe-math" value="false"/>
+        <property key="verbose" value="false"/>
+        <appendMe value="-mfpu=fpv5-d16 -mfloat-abi=hard"/>
+      </ARM-GCC>
+      <ARM-Global>
+        <property key="bin" value="false"/>
+        <property key="common-include-directories" value=""/>
+        <property key="eep" value="false"/>
+        <property key="hex" value="true"/>
+        <property key="lss" value="false"/>
+        <property key="omit-pack-options" value="false"/>
+        <property key="processor-mode" value="-mthumb"/>
+        <property key="srec" value="false"/>
+        <property key="user-pack-include" value=""/>
+      </ARM-Global>
+      <ARM-LD>
+        <property key="additional-specs" value="--specs=nosys.specs"/>
+        <property key="exclude-standard-libraries" value="false"/>
+        <property key="extra-lib-directories" value=""/>
+        <property key="fast-math" value="false"/>
+        <property key="flash-segment" value=""/>
+        <property key="generate-map-file" value="true"/>
+        <property key="input-libraries" value=""/>
+        <property key="no-default-libs" value="false"/>
+        <property key="no-shared-libraries" value="false"/>
+        <property key="no-startup-files" value="false"/>
+        <property key="omit-symbol-information" value="false"/>
+        <property key="other-options" value=""/>
+        <property key="position-independent" value="false"/>
+        <property key="remove-unused-sections" value="true"/>
+        <property key="size-optimized-library" value="false"/>
+        <property key="sram-segment" value=""/>
+        <property key="unsafe-math" value="false"/>
+        <appendMe value="-mfpu=fpv5-d16 -mfloat-abi=hard"/>
+      </ARM-LD>
+    </conf>
+  </confs>
+</configurationDescriptor>

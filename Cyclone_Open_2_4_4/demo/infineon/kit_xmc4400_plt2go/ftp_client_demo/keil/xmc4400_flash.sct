@@ -1,0 +1,31 @@
+;******************************************************************
+;* XMC4400 linker scatter file (running code from internal FLASH) *
+;******************************************************************
+
+LR_IROM1 0x08000000 0x80000
+{
+   ER_IROM1 0x08000000 0x80000
+   {
+      *.o (RESET, +First)
+      *(InRoot$$Sections)
+      .ANY (+RO)
+   }
+   
+   RW_IRAM1 0x1FFFC000 0x4000
+   { 
+      .ANY (+RW +ZI)
+   }
+   
+   RW_IRAM2 0x2000D000 0x2800
+   {
+      .ANY (ETH_RAM +RW +ZI)
+   }
+   
+   ARM_LIB_STACK 0x2000F800 EMPTY 0x7C0
+   {
+   }
+   
+   ARM_LIB_HEAP 0x20000000 EMPTY 0xD000
+   {
+   }
+}

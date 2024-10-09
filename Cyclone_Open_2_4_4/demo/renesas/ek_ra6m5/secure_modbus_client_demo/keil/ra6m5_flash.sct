@@ -1,0 +1,31 @@
+;****************************************************************
+;* RA6M5 linker scatter file (running code from internal FLASH) *
+;****************************************************************
+
+LR_IROM1 0x00000000 0x200000
+{
+   ER_IROM1 0x00000000 0x200000
+   {
+      *.o (RESET, +First)
+      *(InRoot$$Sections)
+      .ANY (+RO)
+   }
+   
+   RW_IRAM1 0x20000000 0x3F000
+   { 
+      .ANY (+RW +ZI)
+   }
+   
+   ARM_LIB_STACK 0x20040000 EMPTY -0x1000
+   {
+   }
+   
+   ARM_LIB_HEAP 0x20040000 EMPTY 0x3C000
+   {
+   }
+   
+   RW_IRAM2 0x2007C000 0x4000
+   {
+      .ANY (.ns_buffer +RW +ZI)
+   }
+}
