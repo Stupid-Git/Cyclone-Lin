@@ -279,6 +279,11 @@ printf("[2] ");
       interface->macAddr.b[0], interface->macAddr.b[1], interface->macAddr.b[2],
       interface->macAddr.b[3], interface->macAddr.b[4], interface->macAddr.b[5]);
 
+//karel
+printf("filterExpr = %s\r\n", filterExpr);
+fflush(stdout);
+//karel
+   
    //Compile the filter
    ret = pcap_compile(context->handle, &filerCode, filterExpr, 1, 0);
 
@@ -536,7 +541,30 @@ void pcapDriverTask(NetInterface *interface)
                if(n != context->readIndex)
                {
 printf("pcap_recvpacket: len = %d\r\n", length);
+printf("  dest : %02x-%02x-%02x-%02x-%02x-%02x\r\n", data[0], data[1], data[2], data[3], data[4], data[5] );
+ if(
 
+    		(data[0] == 0x00) &
+			(data[1] == 0xAB) &
+			(data[2] == 0xCD) &
+			(data[3] == 0xEF) &
+			(data[4] == 0x00) &
+			(data[5] == 0x86)
+
+    		/*
+    		(data[0] == 0x54) &
+			(data[1] == 0xBe) &
+			(data[2] == 0xf7) &
+			(data[3] == 0x0b) &
+			(data[4] == 0x04) &
+			(data[5] == 0x01)
+			*/
+	)
+    {
+    	//printf("pcap_recvpacket: len = %d\r\n", length);
+    	debugDisplayArray(NULL, "", data, length);
+        fflush(stdout);
+    }
                   //Copy the incoming packet
                   osMemcpy(context->queue[context->writeIndex].data, data, length);
                   //Save the length of the packet
